@@ -1,59 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+🎓 UCSH Digital Catalogue System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The Digital Catalogue System is a Laravel 12 and MySQL project designed for the University of Computer Studies, Hinthada (UCSH). This project is officially owned by ucsh.edu.mm and hosted at [https://catalogue.ucsh.edu.mm](https://catalogue.ucsh.edu.mm). The source code repository is located at [https://github.com/AungPyaeSoneUCS/Catalogue](https://github.com/AungPyaeSoneUCS/Catalogue).
 
-## About Laravel
+### 🚀 Overview & Architecture
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This deployment architecture uses a LEMP stack optimized for the university's domain, tailored specifically for Laravel 12.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Web Server & Gateway:** NGINX handles incoming HTTP/HTTPS requests for `catalogue.ucsh.edu.mm` and routes them to the application's `public` directory.
+* **Application Environment:** PHP 8.4-FPM processes the backend Laravel logic.
+* **Database Engine:** A native MySQL database stores system data, user profiles, and catalogue records.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 💻 Local Development Setup
 
-## Learning Laravel
+To run and modify this project locally in your development environment:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+1. **Clone the repository:**
+```bash
+git clone https://github.com/AungPyaeSoneUCS/Catalogue.git
+cd Catalogue
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install Dependencies:** Run `composer install` to pull in Laravel framework packages.
+3. **Environment Setup:** Copy `.env.example` to `.env` and run `php artisan key:generate` to generate your application key.
+4. **Database Configuration:**
+* Create a local MySQL database named `ucsh_catalogue`.
+* Import the provided database `.sql` file into this new database.
+* Update the local database credentials in your `.env` file (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5. **Serve Application:** Run `php artisan serve` to start the local development server.
 
-## Contributing
+### 🛠️ Server Preparation & Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ensure required tools and PHP extensions are installed by running:
 
-## Code of Conduct
+```bash
+sudo apt update && sudo apt install -y curl git nano unzip ufw mysql-server
+sudo apt install -y php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip php8.4-bcmath
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
 
-## Security Vulnerabilities
+### 📦 Initial Server Deployment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+You can deploy the application using either a direct file upload (Zip) or by cloning directly from the Git repository.
 
-## License
+**Option A: Deployment via File Extraction (Copy File)**
+Deploying the application requires uploading the packaged source code and extracting it directly into the web root.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Securely upload your compressed project file and move the archive to the web directory by executing `sudo mv catalog_system.zip /var/www/`.
+2. Extract the files using the unzip utility via `sudo unzip /var/www/catalog_system.zip -d /var/www/catalog_system`.
+
+**Option B: Deployment via Git Clone (Recommended)**
+Cloning directly to the server makes future updates much easier.
+
+1. Navigate to the web root:
+```bash
+cd /var/www/
+
+```
+
+
+2. Clone the repository directly into the target folder:
+```bash
+sudo git clone https://github.com/AungPyaeSoneUCS/Catalogue.git catalog_system
+
+```
+
+
+3. Install production dependencies:
+```bash
+cd catalog_system
+sudo chown -R $USER:www-data /var/www/catalog_system
+composer install --optimize-autoloader --no-dev
+
+```
+
+
+
+### 🗄️ Database & Environment Configuration
+
+To prevent access denial errors, the application must connect using a dedicated MySQL user rather than the system root account.
+
+1. Log into the database shell (`sudo mysql`) and create the user:
+```sql
+CREATE USER 'catalogueuser'@'localhost' IDENTIFIED BY 'Ucsh@2026';
+GRANT ALL PRIVILEGES ON ucsh_catalogue.* TO 'catalogueuser'@'localhost';
+FLUSH PRIVILEGES;
+exit;
+
+```
+
+
+2. Update the configuration file using `nano /var/www/catalog_system/.env` and update the database variables to match the above credentials.
+
+### 🔐 Permissions & NGINX Configuration
+
+Applying the principle of least privilege ensures security while allowing NGINX and PHP-FPM to read files, compile caches, and accept large uploads (like payslips and user profiles).
+
+1. **Assign Ownership:** Assign ownership of the application directory to the web server:
+```bash
+sudo chown -R hinthadauser:www-data /var/www/catalog_system
+
+```
+
+
+2. **Set Directory Permissions:** Set specific write permissions for Laravel's core functional directories and custom upload folders:
+```bash
+sudo chmod -R 775 /var/www/catalog_system/storage
+sudo chmod -R 775 /var/www/catalog_system/bootstrap/cache
+sudo chmod -R 775 /var/www/catalog_system/public/userProfile
+sudo chmod -R 775 /var/www/catalog_system/public/payslipImage
+sudo chmod -R 775 /var/www/catalog_system/public/document
+sudo chmod -R 775 /var/www/catalog_system/public/image
+
+```
+
+
+3. **Link Storage:** Connect the storage directory to the public path:
+```bash
+cd /var/www/catalog_system && php artisan storage:link
+
+```
+
+
+4. **NGINX Setup:** Open the NGINX configuration file: `sudo nano /etc/nginx/sites-available/catalogue.ucsh.edu.mm`. Ensure the `server_name` is set to `catalogue.ucsh.edu.mm`, `client_max_body_size` is increased, and the `root` points to `/var/www/catalog_system/public`.
+5. **Apply Changes:** Apply services changes by executing `sudo systemctl restart php8.4-fpm` followed by `sudo systemctl reload nginx`.
+
+### 🔄 Server Update Workflow (Git Pull)
+
+When new changes are pushed to the GitHub repository, use this workflow to seamlessly upgrade the live server.
+
+1. **Navigate to the application directory:**
+```bash
+cd /var/www/catalog_system
+
+```
+
+
+2. **Pull the latest updates:**
+```bash
+sudo git pull origin main
+
+```
+
+
+*(Troubleshooting: If local file modifications block the pull, run `sudo git fetch --all` and `sudo git reset --hard origin/main` to force sync with the remote repository).*
+3. **Refresh Laravel Caches:**
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+```
+
+
+4. **Reset Permissions:** Newly pulled files may inherit root ownership if pulled via `sudo`. Always re-apply safe permissions:
+```bash
+sudo chown -R hinthadauser:www-data /var/www/catalog_system
+
+```
+
+
+
+### ✅ Verification & Monitoring
+
+Verify the deployment by navigating to `[https://catalogue.ucsh.edu.mm](https://catalogue.ucsh.edu.mm)`.
+
+* If you encounter **500 Internal Server Errors** during file uploads, verify the folder write permissions using `chmod -R 775`.
+* If you encounter **502 Bad Gateway** or unexpected behavior, monitor real-time errors via `sudo tail -f /var/log/nginx/catalogue_error.log`.
+* For Laravel-specific application errors, check the internal logs via `tail -f /var/www/catalog_system/storage/logs/laravel.log`.
+
+Developed and maintained by the University of Computer Studies, Hinthada.
