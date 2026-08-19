@@ -1,4 +1,4 @@
-🎓 UCSH Digital Catalogue System
+## 🎓 UCSH Digital Catalogue System
 
 The Digital Catalogue System is a Laravel 12 and MySQL project designed for the University of Computer Studies, Hinthada (UCSH). This project is officially owned by ucsh.edu.mm and hosted at [https://catalogue.ucsh.edu.mm](https://catalogue.ucsh.edu.mm). The source code repository is located at [https://github.com/AungPyaeSoneUCS/Catalogue](https://github.com/AungPyaeSoneUCS/Catalogue).
 
